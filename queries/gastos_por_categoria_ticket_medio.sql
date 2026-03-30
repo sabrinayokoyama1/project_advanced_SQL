@@ -1,25 +1,20 @@
---- Total de Gastos por categoria e ticket médio por cliente
-SELECT 
-  c.cliente_id AS id_cliente,
-  c.nome,
-  SUM(CASE WHEN t.tipo = 'Débito' THEN t.valor ELSE 0 END) AS total_gasto,
-  t.categoria AS categoria_gastos,
-  AVG(CASE WHEN t.tipo = 'Débito' THEN t.valor ELSE NULL END) AS ticket_medio,
-  DATE_TRUNC('month', t.data_transacao) AS mes_ref
-FROM clientes c
-
-LEFT JOIN contas ct 
-  ON c.cliente_id = ct.cliente_id
-  
-LEFT JOIN transacoes t 
-  ON ct.conta_id = t.conta_id
-  
-GROUP BY 
-  c.cliente_id,
-  c.nome,
-  t.categoria,
-  mes_ref
-  
-ORDER BY 
-  mes_ref,
-  total_gasto DESC;
+SELECT
+    A.cliente_id AS id_cliente,
+    A.nome,
+    SUM(CASE WHEN B.tipo = 'Debito' THEN B.valor ELSE 0 END) AS total_gasto,
+    B.categoria AS categoria_gastos,
+    AVG(CASE WHEN B.tipo = 'Debito' THEN B.valor ELSE NULL END) AS ticket_medio, -- valor médio gasto por transação
+    DATE_TRUNC('month', B.data_transacao) AS mes_ref
+FROM clientes AS A
+LEFT JOIN contas AS C
+    ON A.cliente_id = C.cliente_id
+LEFT JOIN transacoes AS B
+    ON C.conta_id = B.conta_id
+GROUP BY
+    A.cliente_id,
+    A.nome,
+    B.categoria,
+    DATE_TRUNC('month', B.data_transacao)
+ORDER BY
+    mes_ref,
+    total_gasto DESC;
