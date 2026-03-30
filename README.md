@@ -5,7 +5,6 @@ Os dados utilizados são totalmente fictícios, desenvolvidos exclusivamente par
 
 Objetivo
 Demonstrar a capacidade de estruturar e analisar dados em um contexto próximo ao setor financeiro, com foco em geração de insights relevantes para negócio e apoio à tomada de decisão.
-
 O projeto aborda:
 Análise de comportamento financeiro de clientes
 Avaliação de risco de crédito e inadimplência
